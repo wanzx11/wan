@@ -1,0 +1,27 @@
+package com.exmple.entity;
+
+import com.alibaba.fastjson2.JSONObject;
+import com.alibaba.fastjson2.JSONWriter;
+import com.fasterxml.jackson.databind.util.JSONPObject;
+import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+
+public record RestBean<T>(int code, T data , String message) {
+
+    public static <T> RestBean<T> success(T data) {
+        return new RestBean<T>(200,data,"请求成功");
+    }
+
+    public static <T> RestBean<T> success() {
+        return success(null);
+    }
+
+    public static <T> RestBean<T> fail(int code,String message) {
+        return new RestBean<T>(code,null,message);
+    }
+
+
+
+    public String asJsonString(){
+     return JSONObject.toJSONString(this, JSONWriter.Feature.WriteNulls);
+    }
+}
