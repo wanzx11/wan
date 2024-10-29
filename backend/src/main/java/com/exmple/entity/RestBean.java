@@ -2,8 +2,7 @@ package com.exmple.entity;
 
 import com.alibaba.fastjson2.JSONObject;
 import com.alibaba.fastjson2.JSONWriter;
-import com.fasterxml.jackson.databind.util.JSONPObject;
-import com.fasterxml.jackson.databind.util.JSONWrappedObject;
+
 
 public record RestBean<T>(int code, T data , String message) {
 
@@ -19,7 +18,13 @@ public record RestBean<T>(int code, T data , String message) {
         return new RestBean<T>(code,null,message);
     }
 
+    public static <T> RestBean<T> unAuthorized(String message) {
+        return fail(401, message);
+    }
 
+    public static <T> RestBean<T> forbidden(String message) {
+        return fail(403, message);
+    }
 
     public String asJsonString(){
      return JSONObject.toJSONString(this, JSONWriter.Feature.WriteNulls);
