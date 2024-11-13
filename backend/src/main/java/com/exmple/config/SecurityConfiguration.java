@@ -22,6 +22,8 @@ import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import org.springframework.stereotype.Service;
+import org.springframework.web.cors.CorsConfiguration;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -60,6 +62,18 @@ public class SecurityConfiguration {
                         .authenticationEntryPoint(this::unAuthorized)
                         .accessDeniedHandler(this::accessDeny)
                         )
+
+                .cors(conf -> {
+                    CorsConfiguration cors = new CorsConfiguration();
+                    cors.addAllowedOrigin("http://localhost:5173");
+                    cors.setAllowCredentials(false);
+                    /*cors.addAllowedHeader("*");
+                    cors.addAllowedMethod("*");
+                    cors.addExposedHeader("*");*/
+                    UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+                    source.registerCorsConfiguration("/**", cors);
+                    conf.configurationSource(source);
+                        })
                 .csrf(AbstractHttpConfigurer::disable)
                 .sessionManagement(conf -> conf
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
@@ -104,8 +118,7 @@ public class SecurityConfiguration {
         PrintWriter out = response.getWriter();
         String authorization = request.getHeader("Authorization");
         if (jwtUtils.invalidateJwt(authorization)){
-            out.write("退出登录成功");
-            out.write(RestBean.success().asJsonString());
+            out.write(RestBean.success("退出登录成功").asJsonString());
         }else {
             out.write(RestBean.fail(400, "退出登录失败").asJsonString());
         }

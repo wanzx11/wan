@@ -17,13 +17,9 @@ import java.util.Date;
 public class Account {
     @TableId(type = IdType.AUTO)
     Integer id;
-    @TableField("username")
     String username;
-    @TableField("password")
     String password;
-    @TableField("email")
     String email;
-    @TableField("role")
     String role;
     @TableField("register_time")
     Date registerTime;
