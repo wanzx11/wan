@@ -39,15 +39,18 @@ public class FlowLimitFilter extends HttpFilter {
     }
 
     private boolean IsBlock(String ip){
-        if(Boolean.TRUE.equals(template.hasKey(Const.FLOW_BLOCK + ip))){
-            return true;
+        synchronized (ip){
+            if(Boolean.TRUE.equals(template.hasKey(Const.FLOW_BLOCK + ip))){
+                return true;
+            }
+            return this.overCount(ip);
         }
-        return this.overCount(ip);
     }
 
     private boolean overCount(String ip){
         if(Boolean.TRUE.equals(template.hasKey(Const.FLOW_COUNT + ip))){
-            Long count = Optional.ofNullable( template.opsForValue().increment(Const.FLOW_COUNT + ip)).orElse(0L);
+            Long count = template.opsForValue().increment(Const.FLOW_COUNT + ip);
+            if(count == null) count = 0L;
             if(count >= 20){
                 template.opsForValue().set(Const.FLOW_BLOCK+ip,"" , 20, TimeUnit.SECONDS);
                 return true;

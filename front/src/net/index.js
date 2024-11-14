@@ -44,7 +44,13 @@ function deleteToken(){
     sessionStorage.removeItem(authItemName);
 }
 
+function post(url,data,success){
+    internalPost(url,data,authHeader(),success,failure);
+}
 
+function get(url,success,failure){
+    internalGet(url,authHeader(),success,failure);
+}
 
 function internalPost(url,data,header,success,failure,error = defaultError){
     axios.post(url,data,{headers:header} ).then(({data}) => {
@@ -85,11 +91,16 @@ function logout(success,failure = defaultFailure){
         'Authorization': `Bearer ${takeToken()}`
         },() => {
         deleteToken()
-        console.log("dasdadsadda")
         ElMessage.success('退出成功')
         success()
         },failure
     )
+}
+
+function authHeader(){
+    return {
+        'Authorization': `Bearer ${takeToken()}`
+    }
 }
 
 //是否未登录
@@ -98,6 +109,8 @@ function unauthorize(){
 }
 
 
-export {login,logout,unauthorize}
+
+
+export {login,logout,post,get,unauthorize}
 
 

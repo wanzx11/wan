@@ -6,7 +6,7 @@ import {login} from "@/net/index.js";
 import router from "@/router/index.js";
 
 
-const from = reactive({
+const form = reactive({
   username:'',
   password:'',
   remember:false
@@ -22,7 +22,7 @@ const rule={
 }
 
 function  userLogin(){
-  login(from.username,from.password,from.remember, ()=>{
+  login(form.username,form.password,form.remember, ()=>{
     router.push('/test')
   });
 }
@@ -36,17 +36,17 @@ function  userLogin(){
       <div STYLE="font-size: 20px;font-weight: bold">登录</div>
       <div STYLE="font-size: 14px;color: grey ">欢迎登录xxxxx</div>
    </div>
-    <div style="margin-top: 50px;" :rules="rule">
-      <el-form :model="from">
+    <div style="margin-top: 50px;" >
+      <el-form :model="form" :rules="rule">
         <el-form-item>
-          <el-input id="username" v-model="from.username" type="text" placeholder="用户名/邮箱">
+          <el-input id="username" v-model="form.username" type="text" placeholder="用户名/邮箱">
             <template  #prefix>
               <el-icon><User /></el-icon>
             </template>
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-input id="password" v-model="from.password" type="text" placeholder="密码">
+          <el-input id="password" v-model="form.password" type="text" placeholder="密码">
             <template  #prefix>
               <el-icon><Lock /></el-icon>
             </template>
@@ -54,7 +54,7 @@ function  userLogin(){
         </el-form-item>
         <el-row>
           <el-col :span="12" style="text-align: left;">
-            <el-checkbox v-model="from.remember" label="记住我" />
+            <el-checkbox v-model="form.remember" label="记住我" />
           </el-col>
           <el-col :span="12" style="text-align: right;">
             <el-link type="info">忘记密码？</el-link>
@@ -69,7 +69,7 @@ function  userLogin(){
       <span style="font-size: 13px;color: grey">没有账号</span>
     </el-divider>
     <div>
-      <el-button type="info" style="width: 200px" plain >立即注册</el-button>
+      <el-button @click="router.push('/register')" type="info" style="width: 200px" plain >立即注册</el-button>
     </div>
   </div>
 </template>

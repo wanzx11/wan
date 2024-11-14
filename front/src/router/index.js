@@ -13,6 +13,11 @@ const router = createRouter({
                     path:'/',
                     name:'Welcome-login',
                     component:()=>import('@/views/welcome/login.vue'),
+                },
+                {
+                    path:'/register',
+                    name:'Welcome-register',
+                    component:() => import('@/views/welcome/register.vue'),
                 }
             ]
         },{
@@ -22,6 +27,7 @@ const router = createRouter({
         }
     ]
 })
+
 router.beforeEach((to, from, next) => {
     const isUnauthorized = unauthorize()
     if(to.name.startsWith('welcome') && !isUnauthorized) {
