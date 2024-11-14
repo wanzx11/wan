@@ -57,7 +57,7 @@ function  userLogin(){
             <el-checkbox v-model="form.remember" label="记住我" />
           </el-col>
           <el-col :span="12" style="text-align: right;">
-            <el-link type="info">忘记密码？</el-link>
+            <el-link type="info" @click="router.push('/forget')">忘记密码？</el-link>
           </el-col>
         </el-row>
       </el-form>

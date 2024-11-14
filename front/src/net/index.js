@@ -34,7 +34,6 @@ function takeToken(){
         ElMessage.warning("登录过期，请重新登录")
         return null
     }
-    console.log(authObj.token)
     return authObj.token
 }
 
@@ -44,7 +43,7 @@ function deleteToken(){
     sessionStorage.removeItem(authItemName);
 }
 
-function post(url,data,success){
+function post(url,data,success,failure){
     internalPost(url,data,authHeader(),success,failure);
 }
 
