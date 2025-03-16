@@ -1,13 +1,10 @@
-/*
+
 package com.exmple.config;
 
 
-import org.springframework.amqp.core.AmqpTemplate;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.core.QueueBuilder;
-import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
-import org.springframework.amqp.rabbit.connection.ConnectionFactory;
-import org.springframework.amqp.rabbit.core.RabbitTemplate;
+import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -21,6 +18,11 @@ public class RabbitConfiguration {
                 .build();
     }
 
-
+    @Bean
+    public Jackson2JsonMessageConverter messageConverter() {
+        Jackson2JsonMessageConverter converter = new Jackson2JsonMessageConverter();
+        // 如果需要，可以自定义 ObjectMapper
+        return converter;
+    }
 }
-*/
+

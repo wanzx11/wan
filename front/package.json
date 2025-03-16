@@ -9,13 +9,25 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@element-plus/icons-vue": "^2.3.1",
+    "@vueup/vue-quill": "^1.2.0",
     "axios": "^1.7.7",
     "element-plus": "^2.8.6",
+    "pinia": "^2.2.6",
+    "quill": "^2.0.3",
+    "quill-delta-to-html": "^0.12.1",
+    "quill-image-drop-module": "^1.0.3",
+    "quill-image-resize-module": "^3.0.0",
+    "quill-image-resize-vue": "^1.0.4",
+    "quill-image-super-solution-module": "^2.0.1",
+    "qweather-icons": "^1.6.0",
     "vue": "^3.5.12",
+    "vue-quill-editor": "^3.0.6",
     "vue-router": "^4.4.5"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.1.4",
+    "less": "^4.2.1",
     "unplugin-auto-import": "^0.18.3",
     "unplugin-vue-components": "^0.27.4",
     "vite": "^5.4.10"

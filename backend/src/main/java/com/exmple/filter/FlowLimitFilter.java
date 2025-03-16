@@ -34,8 +34,6 @@ public class FlowLimitFilter extends HttpFilter {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
             response.getWriter().write(RestBean.forbidden("请求繁忙，请稍后在试").asJsonString());
         }
-
-
     }
 
     private boolean IsBlock(String ip){
@@ -51,7 +49,7 @@ public class FlowLimitFilter extends HttpFilter {
         if(Boolean.TRUE.equals(template.hasKey(Const.FLOW_COUNT + ip))){
             Long count = template.opsForValue().increment(Const.FLOW_COUNT + ip);
             if(count == null) count = 0L;
-            if(count >= 20){
+            if(count >= 40){
                 template.opsForValue().set(Const.FLOW_BLOCK+ip,"" , 20, TimeUnit.SECONDS);
                 return true;
             }

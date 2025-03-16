@@ -1,6 +1,7 @@
 package com.exmple.filter;
 
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.exmple.utils.Const;
 import com.exmple.utils.JwtUtils;
 import jakarta.annotation.Resource;
 import jakarta.servlet.FilterChain;
@@ -17,7 +18,6 @@ import org.springframework.web.filter.OncePerRequestFilter;
 import java.io.IOException;
 
 @Component
-
 public class JwtAuthroizeFilter extends OncePerRequestFilter {
 
     @Resource
@@ -35,7 +35,7 @@ public class JwtAuthroizeFilter extends OncePerRequestFilter {
                     new UsernamePasswordAuthenticationToken(user, null, user.getAuthorities());
             authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
             SecurityContextHolder.getContext().setAuthentication(authentication);
-            request.setAttribute("id", jwtUtils.toId(jwt));
+            request.setAttribute(Const.USER_ID, jwtUtils.toId(jwt));
         }
         filterChain.doFilter(request, response);
     }

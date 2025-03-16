@@ -5,22 +5,22 @@ spring:
       expiry: 7
 
   mail:
-    password: DMgXk5Q9NZEyyPkd
+    password: SDbtEM4znyAsH288
     host: smtp.163.com
     username: wanzx11@163.com
 
   rabbitmq:
-    stream:
-      username: root
-      password: 123456o
-      host: localhost
-      port: 5672
+    addresses: localhost
+    username: guest
+    password: guest
+    virtual-host: /
 
   datasource:
     url: jdbc:mysql://localhost:3306/myschool
     username: root
     password: 123456
     driver-class-name: com.mysql.cj.jdbc.Driver
+
 
 mybatis-plus:
   configuration:

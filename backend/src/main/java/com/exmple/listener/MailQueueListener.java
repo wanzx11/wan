@@ -1,7 +1,7 @@
-/*
 package com.exmple.listener;
 
 import jakarta.annotation.Resource;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.amqp.rabbit.annotation.RabbitHandler;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
 import org.springframework.beans.factory.annotation.Value;
@@ -12,6 +12,7 @@ import org.springframework.stereotype.Component;
 import java.util.Map;
 
 @Component
+@Slf4j
 @RabbitListener(queues = "email")
 public class MailQueueListener {
 
@@ -23,27 +24,30 @@ public class MailQueueListener {
 
     @RabbitHandler
     public void setMailMassage(Map<String,Object> data) {
+        log.info("Received email data: {}", data);
         String email = (String) data.get("email");
         Integer code = (Integer) data.get("code");
         String type = (String) data.get("type");
         SimpleMailMessage message = switch (type){
             case "register" -> createMessage(
                     "欢迎注册我的网站",
-                    "您的邮寄验证码为："+code+"有效时间五分钟，为了你的安全请勿向他人泄露该验证码。",
+                    "您的邮寄验证码为："+code+"\n有效时间五分钟，为了你的安全请勿向他人泄露该验证码。",
                     email
             );
-            case "resetPassword" -> createMessage(
+            case "reset" -> createMessage(
                     "重置密码验证码",
-                    "您好，本次重置密码验证码为："+code+"有效时间五分钟，为了你的安全请勿向他人泄露该验证码。",
+                    "您好，本次重置密码验证码为："+code+"\n有效时间五分钟，为了你的安全请勿向他人泄露该验证码。",
+                    email
+            );
+            case "reset-email" -> createMessage(
+                    "重置邮箱",
+                    "您好，本次重置邮箱验证码为："+code+"\n有效时间五分钟，为了你的安全请勿向他人泄露该验证码。",
                     email
             );
             default -> null;
         };
         if (message == null) return;
-
         mailSender.send(message);
-
-
     }
 
     private SimpleMailMessage createMessage(String title, String content,String email) {
@@ -56,4 +60,3 @@ public class MailQueueListener {
     }
 
 }
-*/

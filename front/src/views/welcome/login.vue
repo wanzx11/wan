@@ -23,7 +23,7 @@ const rule={
 
 function  userLogin(){
   login(form.username,form.password,form.remember, ()=>{
-    router.push('/test')
+    router.push('/index')
   });
 }
 
@@ -46,7 +46,7 @@ function  userLogin(){
           </el-input>
         </el-form-item>
         <el-form-item>
-          <el-input id="password" v-model="form.password" type="text" placeholder="密码">
+          <el-input id="password" v-model="form.password"  type="password" placeholder="密码">
             <template  #prefix>
               <el-icon><Lock /></el-icon>
             </template>

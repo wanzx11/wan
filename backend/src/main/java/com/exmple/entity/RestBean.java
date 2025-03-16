@@ -10,12 +10,13 @@ public record RestBean<T>(int code, T data , String message) {
         return new RestBean<T>(200,data,"请求成功");
     }
 
-    public static <T> RestBean<T> success() {
-        return success(null);
-    }
+
 
     public static <T> RestBean<T> fail(int code,String message) {
         return new RestBean<T>(code,null,message);
+    }
+    public static <T> RestBean<T> success() {
+        return success(null);
     }
 
     public static <T> RestBean<T> unAuthorized(String message) {

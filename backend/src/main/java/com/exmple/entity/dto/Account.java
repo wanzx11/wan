@@ -23,5 +23,6 @@ public class Account {
     String role;
     @TableField("register_time")
     Date registerTime;
+    String avatar;
 }
 

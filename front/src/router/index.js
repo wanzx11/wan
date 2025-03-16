@@ -13,6 +13,7 @@ const router = createRouter({
                     path:'/',
                     name:'Welcome-login',
                     component:()=>import('@/views/welcome/login.vue'),
+
                 },
                 {
                     path:'/register',
@@ -26,9 +27,52 @@ const router = createRouter({
                 }
             ]
         },{
-            path: '/test',
-            name: 'test',
-            component:() =>import('@/views/test.vue')
+            path: '/index',
+            name: 'index',
+            component:() =>import('@/views/index.vue'),
+            children:[
+                /*{
+                    path: '',
+                    name: 'topic-list',
+                    component:()=>import('@/views/forum/TopicList.vue'),
+                    meta: { keepAlive: true },
+                },
+                {
+                    path: 'topic-detail/:tid',
+                    name: 'topic-detail',
+                    component:()=>import('@/views/forum/TopicDetail.vue'),
+                    meta: { keepAlive: true },
+                },*/
+                {
+                    path: '',
+                    name: 'topics',
+                    component:()=> import('@/views/forum/Forum.vue'),
+                    children:[
+                        {
+                            path: '',
+                            name: 'topic-list',
+                            component:()=>import('@/views/forum/TopicList.vue'),
+                            meta: { keepAlive: true },
+                        },
+                        {
+                            path: 'topic-detail/:tid',
+                            name: 'topic-detail',
+                            component:()=>import('@/views/forum/TopicDetail.vue')
+                        }
+                    ]
+                },
+                {
+                    path: 'user-setting',
+                    name: 'user-setting',
+                    component:()=>import('@/views/settings/UserSetting.vue')
+                },
+                {
+                    path:'safety-setting',
+                    name:'safety-setting',
+                    component:()=>import('@/views/settings/SafetySetting.vue')
+                }
+
+            ]
         }
     ]
 })
