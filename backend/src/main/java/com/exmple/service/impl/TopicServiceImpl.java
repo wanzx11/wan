@@ -202,14 +202,17 @@ public  class TopicServiceImpl extends ServiceImpl<TopicMapper, Topic> implement
 
     @Override
     public void deleteTopic(int tid, int uid) {
-        Topic topic = baseMapper.selectById(tid);
-        if (uid == topic.getUid()){
-            baseMapper.deleteById(tid);
-            baseMapper.deleteOneInteract(String.valueOf(tid),"collect");
-            baseMapper.deleteOneInteract(String.valueOf(tid),"like");
-            topicCommentMapper.delete(Wrappers.<Comment>query().eq("tid",tid));
+        int deletedRows = baseMapper.delete(Wrappers.<Topic>query()
+                .eq("id", tid)
+                .eq("uid", uid));
+
+        if (deletedRows > 0) { // 确保帖子属于该用户并成功删除
+            baseMapper.deleteOneInteract(String.valueOf(tid), "collect");
+            baseMapper.deleteOneInteract(String.valueOf(tid), "like");
+            topicCommentMapper.delete(Wrappers.<Comment>query().eq("tid", tid));
         }
     }
+
 
     @Override
     public void interact(Interact interact, boolean state) {
