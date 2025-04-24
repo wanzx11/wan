@@ -50,7 +50,7 @@ public class FlowLimitFilter extends HttpFilter {
             Long count = template.opsForValue().increment(Const.FLOW_COUNT + ip);
             if(count == null) count = 0L;
             if(count >= 40){
-                template.opsForValue().set(Const.FLOW_BLOCK+ip,"" , 20, TimeUnit.SECONDS);
+                template.opsForValue().set(Const.FLOW_BLOCK+ip,"" , 30, TimeUnit.SECONDS);
                 return true;
             }
         }else {
@@ -58,5 +58,4 @@ public class FlowLimitFilter extends HttpFilter {
         }
         return false;
     }
-
 }
